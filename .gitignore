@@ -3,6 +3,9 @@
 /node_modules
 /build
 src/generated/prisma
+.agents/skills
+.claude/skills
+.windsurf/skills
 
 # Logs
 logs
