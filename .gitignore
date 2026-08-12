@@ -2,6 +2,7 @@
 /dist
 /node_modules
 /build
+src/generated/prisma
 
 # Logs
 logs
@@ -27,6 +28,8 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+/prisma copy
+
 
 # IDE - VSCode
 .vscode/*
