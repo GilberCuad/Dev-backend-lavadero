@@ -3,8 +3,8 @@
 // ============================================================
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -49,14 +49,14 @@ enum MetodoPago {
 // ------------------------------------------------------------
 
 model Usuario {
-  id            String   @id @default(uuid())
-  nombre        String
-  email         String   @unique
-  passwordHash  String   @map("password_hash")
-  rol           Rol
-  activo        Boolean  @default(true)
-  createdAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
+  id           String   @id @default(uuid())
+  nombre       String
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  rol          Rol
+  activo       Boolean  @default(true)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
 
   registrosCreados RegistroServicio[] @relation("RegistroCreadoPor")
   pagosCreados     PagoEmpleado[]     @relation("PagoCreadoPor")
@@ -69,16 +69,16 @@ model Usuario {
 // ------------------------------------------------------------
 
 model Empleado {
-  id            String         @id @default(uuid())
-  nombre        String
-  documento     String         @unique
-  cargo         String
-  fechaIngreso  DateTime       @map("fecha_ingreso")
-  estado        EstadoEmpleado @default(ACTIVO)
-  createdAt     DateTime       @default(now()) @map("created_at")
-  updatedAt     DateTime       @updatedAt @map("updated_at")
+  id           String         @id @default(uuid())
+  nombre       String
+  documento    String         @unique
+  cargo        String
+  fechaIngreso DateTime       @map("fecha_ingreso")
+  estado       EstadoEmpleado @default(ACTIVO)
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
 
-  pagos            PagoEmpleado[]
+  pagos              PagoEmpleado[]
   serviciosPrestados RegistroServicioEmpleado[]
 
   @@map("empleados")
@@ -89,19 +89,19 @@ model Empleado {
 // ------------------------------------------------------------
 
 model PagoEmpleado {
-  id           String   @id @default(uuid())
-  empleadoId   String   @map("empleado_id")
-  monto        Decimal  @db.Decimal(10, 2)
-  fechaPago    DateTime @map("fecha_pago")
-  observacion  String?
-  createdById  String   @map("created_by")
-  createdAt    DateTime @default(now()) @map("created_at")
+  id          String   @id @default(uuid())
+  empleadoId  String   @map("empleado_id")
+  monto       Decimal  @db.Decimal(10, 2)
+  fechaPago   DateTime @map("fecha_pago")
+  observacion String?
+  createdById String   @map("created_by")
+  createdAt   DateTime @default(now()) @map("created_at")
 
   empleado  Empleado @relation(fields: [empleadoId], references: [id])
   createdBy Usuario  @relation("PagoCreadoPor", fields: [createdById], references: [id])
 
-  @@map("pagos_empleados")
   @@index([fechaPago])
+  @@map("pagos_empleados")
 }
 
 // ------------------------------------------------------------
@@ -124,10 +124,12 @@ model Vehiculo {
 // ------------------------------------------------------------
 
 model Servicio {
-  id     String  @id @default(uuid())
-  nombre String
-  precio Decimal @db.Decimal(10, 2)
-  activo Boolean @default(true)
+  id        String   @id @default(uuid())
+  nombre    String   @unique
+  precio    Decimal  @db.Decimal(10, 2)
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   detalles RegistroServicioDetalle[]
 
@@ -139,16 +141,16 @@ model Servicio {
 // ------------------------------------------------------------
 
 model RegistroServicio {
-  id            String                 @id @default(uuid())
-  vehiculoId    String                 @map("vehiculo_id")
-  estado        EstadoRegistroServicio @default(EN_ESPERA)
-  metodoPago    MetodoPago             @map("metodo_pago")
-  fechaIngreso  DateTime               @default(now()) @map("fecha_ingreso")
-  fechaEntrega  DateTime?              @map("fecha_entrega")
-  total         Decimal                @db.Decimal(10, 2) // snapshot: suma de servicios al crear el registro
-  createdById   String                 @map("created_by")
-  createdAt     DateTime               @default(now()) @map("created_at")
-  updatedAt     DateTime               @updatedAt @map("updated_at")
+  id           String                 @id @default(uuid())
+  vehiculoId   String                 @map("vehiculo_id")
+  estado       EstadoRegistroServicio @default(EN_ESPERA)
+  metodoPago   MetodoPago             @map("metodo_pago")
+  fechaIngreso DateTime               @default(now()) @map("fecha_ingreso")
+  fechaEntrega DateTime?              @map("fecha_entrega")
+  total        Decimal                @db.Decimal(10, 2) // snapshot: suma de servicios al crear el registro
+  createdById  String                 @map("created_by")
+  createdAt    DateTime               @default(now()) @map("created_at")
+  updatedAt    DateTime               @updatedAt @map("updated_at")
 
   vehiculo  Vehiculo @relation(fields: [vehiculoId], references: [id])
   createdBy Usuario  @relation("RegistroCreadoPor", fields: [createdById], references: [id])
@@ -156,8 +158,8 @@ model RegistroServicio {
   detalles  RegistroServicioDetalle[]
   empleados RegistroServicioEmpleado[]
 
-  @@map("registros_servicio")
   @@index([fechaIngreso])
+  @@map("registros_servicio")
 }
 
 // ------------------------------------------------------------
@@ -173,8 +175,8 @@ model RegistroServicioDetalle {
   registroServicio RegistroServicio @relation(fields: [registroServicioId], references: [id], onDelete: Cascade)
   servicio         Servicio         @relation(fields: [servicioId], references: [id])
 
-  @@map("registro_servicio_detalle")
   @@unique([registroServicioId, servicioId])
+  @@map("registro_servicio_detalle")
 }
 
 // ------------------------------------------------------------
@@ -189,6 +191,6 @@ model RegistroServicioEmpleado {
   registroServicio RegistroServicio @relation(fields: [registroServicioId], references: [id], onDelete: Cascade)
   empleado         Empleado         @relation(fields: [empleadoId], references: [id])
 
-  @@map("registro_servicio_empleado")
   @@unique([registroServicioId, empleadoId])
+  @@map("registro_servicio_empleado")
 }
