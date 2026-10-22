@@ -1,11 +1,9 @@
-import { Body, Controller, Post, HttpCode, HttpStatus, Get, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { Roles } from './decorators/roles.decorator';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { RolesGuard } from './guards/roles.guard';
 import { Throttle } from '@nestjs/throttler';
 
+// El perfil propio ahora vive en GET /usuarios/me
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
@@ -15,12 +13,5 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
-  }
-
-  @Get('perfil')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
-  perfil(@Req() req: any) {
-    return req.user;
   }
 }

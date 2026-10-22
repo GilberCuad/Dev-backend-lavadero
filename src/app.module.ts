@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { EmpleadosModule } from './empleados/empleados.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
   ThrottlerModule.forRoot([
@@ -18,6 +19,7 @@ import { EmpleadosModule } from './empleados/empleados.module';
     PrismaModule,
     AuthModule,
     EmpleadosModule,
+    UsuariosModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
