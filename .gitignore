@@ -62,3 +62,6 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 /generated/prisma
+
+# Contexto local para Claude Code (no se sube al repo)
+CLAUDE.md
