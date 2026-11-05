@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { EmpleadosModule } from './empleados/empleados.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { ServiciosModule } from './servicios/servicios.module';
+import { VehiculosModule } from './vehiculos/vehiculos.module';
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
   ThrottlerModule.forRoot([
@@ -22,6 +23,7 @@ import { ServiciosModule } from './servicios/servicios.module';
     EmpleadosModule,
     UsuariosModule,
     ServiciosModule,
+    VehiculosModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
