@@ -2,6 +2,10 @@
 /dist
 /node_modules
 /build
+src/generated/prisma
+.agents/skills
+.claude/skills
+.windsurf/skills
 
 # Logs
 logs
@@ -27,6 +31,8 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+/prisma copy
+
 
 # IDE - VSCode
 .vscode/*
@@ -56,3 +62,6 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 /generated/prisma
+
+# Contexto local para Claude Code (no se sube al repo)
+CLAUDE.md
