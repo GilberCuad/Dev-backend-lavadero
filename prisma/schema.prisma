@@ -36,6 +36,7 @@ enum EstadoRegistroServicio {
   EN_PROCESO
   TERMINADO
   ENTREGADO
+  CANCELADO
 }
 
 enum MetodoPago {
@@ -145,7 +146,7 @@ model RegistroServicio {
   id           String                 @id @default(uuid())
   vehiculoId   String                 @map("vehiculo_id")
   estado       EstadoRegistroServicio @default(EN_ESPERA)
-  metodoPago   MetodoPago             @map("metodo_pago")
+  metodoPago   MetodoPago?            @map("metodo_pago") // se registra al entregar (el cliente paga al recoger)
   fechaIngreso DateTime               @default(now()) @map("fecha_ingreso")
   fechaEntrega DateTime?              @map("fecha_entrega")
   total        Decimal                @db.Decimal(10, 2) // snapshot: suma de servicios al crear el registro

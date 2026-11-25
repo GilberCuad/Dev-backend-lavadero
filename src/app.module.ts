@@ -10,6 +10,7 @@ import { EmpleadosModule } from './empleados/empleados.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { ServiciosModule } from './servicios/servicios.module';
 import { VehiculosModule } from './vehiculos/vehiculos.module';
+import { RegistrosModule } from './registros/registros.module';
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
   ThrottlerModule.forRoot([
@@ -24,6 +25,7 @@ import { VehiculosModule } from './vehiculos/vehiculos.module';
     UsuariosModule,
     ServiciosModule,
     VehiculosModule,
+    RegistrosModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
